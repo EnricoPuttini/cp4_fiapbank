@@ -14,6 +14,17 @@ public class BaseEntity {
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Construtor de reconstituição, usado exclusivamente pela camada de
+     * infraestrutura para reidratar uma entidade a partir de dados já
+     * persistidos, preservando os timestamps originais.
+     */
+    protected BaseEntity(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public UUID getId() {
         return id;
     }

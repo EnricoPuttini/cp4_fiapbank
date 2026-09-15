@@ -1,6 +1,7 @@
 package com.fiap.bank.atm.domain.model;
 
 import com.fiap.bank.atm.domain.exception.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,8 +32,45 @@ public class Account extends BaseEntity {
         this.transactions = new ArrayList<>();
     }
 
+    /**
+     * Construtor de reconstituição, usado apenas pela camada de
+     * infraestrutura para reidratar uma conta a partir do banco de dados,
+     * preservando todo o estado já persistido (saldo, bloqueio, tentativas,
+     * timestamps originais etc).
+     */
+    private Account(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String accountNumber, String pin,
+            Money balance, Money dailyWithdrawalLimit, Money totalWithdrawnToday, boolean blocked,
+            int failedAttempts) {
+        super(id, createdAt, updatedAt);
+        this.accountNumber = accountNumber;
+        this.pin = pin;
+        this.balance = balance;
+        this.dailyWithdrawalLimit = dailyWithdrawalLimit;
+        this.totalWithdrawnToday = totalWithdrawnToday;
+        this.blocked = blocked;
+        this.failedAttempts = failedAttempts;
+        this.transactions = new ArrayList<>();
+    }
+
+    /**
+     * Reconstrói uma conta a partir de dados já persistidos (usado
+     * exclusivamente pelos repositórios de infraestrutura).
+     */
+    public static Account reconstruct(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt,
+            String accountNumber, String pin, Money balance, Money dailyWithdrawalLimit,
+            Money totalWithdrawnToday, boolean blocked, int failedAttempts, List<Transaction> transactions) {
+        Account account = new Account(id, createdAt, updatedAt, accountNumber, pin, balance, dailyWithdrawalLimit,
+                totalWithdrawnToday, blocked, failedAttempts);
+        transactions.forEach(account::seedTransaction);
+        return account;
+    }
+
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    public String getPin() {
+        return pin;
     }
 
     public Money getBalance() {

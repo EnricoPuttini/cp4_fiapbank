@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.fiap.bank</groupId>
+        <artifactId>fiap-bank-atm</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>presentation</artifactId>
+    <packaging>jar</packaging>
+
+    <name>fiap-bank-atm-presentation</name>
+    <description>
+        Camada de Apresentação (Java Swing). REGRA INVIOLÁVEL: depende exclusivamente do
+        módulo application. Não possui, e não pode possuir, nenhuma dependência direta a
+        domain ou infrastructure - garantido em tempo de compilação pelo Maven.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fiap.bank</groupId>
+            <artifactId>application</artifactId>
+        </dependency>
+        <!-- Look and feel da tela Swing; não é uma dependência arquitetural (domain/infra) -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+        </dependency>
+    </dependencies>
+</project>
