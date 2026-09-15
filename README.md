@@ -18,7 +18,7 @@ A aplicação foi projetada com arquitetura limpa em camadas baseada em **DDD (D
 
 ---
 
-## 🎯 Principais Funcionalidades
+##  Principais Funcionalidades
 
 - **🔐 Autenticação Segura & Gestão de PIN**:
   - Leitura e validação de conta bancária e senha numérica de 4 dígitos.
